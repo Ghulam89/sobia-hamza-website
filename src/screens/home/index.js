@@ -28,7 +28,7 @@ const Home = () => {
       <Collections />
       <div className="mx-auto">
         <h1 className=" text-black font-bold py-4  px-4 text-2xl">Product</h1>
-        <div className="  py-4  gap-4 grid px-4 sm:grid-cols-3 grid-cols-2">
+        <div className="  py-4  gap-4 grid px-4 sm:grid-cols-4 grid-cols-2">
           {allProduct?.map((item, index) => {
             return (
               <>

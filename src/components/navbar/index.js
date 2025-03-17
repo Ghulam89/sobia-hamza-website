@@ -120,12 +120,18 @@ const Navbar = () => {
             </button>
           </div>
           <div className="p-4">
+            <Link to={'/shop'}>
             <h2 className="text-xl font-semibold">Shop</h2>
+            </Link>
+            
             <ul className="mt-4 space-y-3">
               {subCategory?.map((item, index) => {
                 return (
                   <>
-                  <li>{item?.title}</li>
+                  <li>
+                    <Link to={`/categories/${item._id}`}>
+                    {item?.title}</Link>
+                  </li>
                   
                   </>
                   
@@ -236,9 +242,19 @@ const Navbar = () => {
               <Link to={'/cart'}  >
                 <Button
                   onClick={() => setProductDrawerOpen(false)}
-                  label={"Add To Cart"}
+                  label={"View Cart"}
                   className={
                     " text-black font-semibold w-full hover:text-white py-1.5 mt-3 uppercase border border-black hover:bg-[black]"
+                  }
+                />
+              </Link>
+
+              <Link to={'/shop'}  >
+                <Button
+                  onClick={() => setProductDrawerOpen(false)}
+                  label={"Continue Shopping"}
+                  className={
+                    " text-white bg-black font-semibold w-full hover:text-white py-1.5 mt-3 uppercase border border-black hover:bg-[black]"
                   }
                 />
               </Link>
