@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import sliderImg_1 from '../../assets/images/sliderImg_1.webp';
-import sliderImg_2 from '../../assets/images/sliderImg_2.webp';
-import sliderImg_3 from '../../assets/images/sliderImg_3.webp';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import { Base_url } from "../../utils/Base_url";

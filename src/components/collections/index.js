@@ -27,16 +27,15 @@ const Collections = () => {
 
   return (
     <>
-     {categories.length > 0 && (
-        <Link to={`/categories/${categories[0]._id}`}>
-          <img
-            src={categories[0].image}
-            className="w-full h-full mt-2 object-center"
-            alt={categories[0].name || "Category"}
-          />
-        </Link>
-      )}
-
+   {categories.length > 0 && (
+  <Link to={`/categories/${categories[0]._id}`}>
+    <img
+      src={categories[0].image}
+      className="  object-center mt-2  w-full"
+      alt={categories[0].name || "Category"}
+    />
+  </Link>
+)}
       <div className="mt-4 px-4">
      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

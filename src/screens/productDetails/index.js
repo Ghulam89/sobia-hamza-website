@@ -21,6 +21,7 @@ const ProductDetails = ({
 
   const dispatch = useDispatch();
   const storedUser = localStorage.getItem("user_ID") || undefined;
+  const [selectedSize, setSelectedSize] = useState(null);
 
   const [curr, setCurr] = useState(0);
   const prev = () =>
@@ -103,6 +104,30 @@ const ProductDetails = ({
 
 
 
+  const [quantity,setQuantity] = useState(1);
+  const handleAddToCart = () => {
+    // Check if product has sizes and if a size is selected
+    if (allProduct?.size?.length > 0 && !selectedSize) {
+      toast.error("Please select a size before adding to cart");
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        _id: allProduct?._id,
+        image: allProduct?.images[0],
+        description: allProduct?.description,
+        title: allProduct?.title,
+        quantity:quantity,
+        price: allProduct?.discountPrice,
+        size: selectedSize 
+      })
+    );
+
+    toast.success('Product added to cart successfully!');
+  };
+
+
   const tabData = [
     { title: "Product Details", content:<>
     <p className="">Keep your closet on trend with the Allgood Relaxed 7/8 Cargo Pants. These trendy pants feature a neutral tan hue and a relaxed fit that offers a comfortable and easy-going wear. The 7/8 length and cargo pockets add a touch of utility to your look, making them a great choice for casual outings or weekend adventures, pairing well with your favourite tees or hoodies for a laid-back and effortless outfit.
@@ -156,7 +181,7 @@ const ProductDetails = ({
     <div>
       <Navbar />
       <div className=" md:flex block container md:px-10 px-0 mx-auto py-4 justify-between">
-        <div className=" md:w-[70%] w-[100%]">
+        <div className="  sm:w-6/12  w-full">
           <div>
           <ul className="flex mb-4 gap-1 px-3 items-center overflow-x-auto whitespace-nowrap">
           <li>
@@ -202,7 +227,7 @@ const ProductDetails = ({
               </li>
             </ul>
           </div>
-          <div className="overflow-hidden relative md:w-[90%] w-[100%]">
+          <div className="overflow-hidden relative  w-[100%]">
             <div
               className="flex  transition-transform ease-out duration-500 h-[75vh]"
               style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -212,7 +237,7 @@ const ProductDetails = ({
                 return (
                   <div key={i} className="flex-none w-full h-full">
                     <img
-                    //   onClick={openSlider}
+                    
                       src={image}
                       alt=""
                       className="w-full cursor-pointer h-full object-contain"
@@ -222,7 +247,7 @@ const ProductDetails = ({
               })}
             </div>
           
-            <button
+            {/* <button
               onClick={prev}
               className=" w-12 h-16 shadow  absolute left-12 top-56 flex  justify-center items-center bg-white/80 text-gray-800 hover:bg-white"
             >
@@ -234,7 +259,7 @@ const ProductDetails = ({
             >
               <TfiAngleRight size={20} />
             </button>
-            {/* </div> */}
+           */}
           </div>
           <div className=" mt-5 md:block hidden">
             <div className="flex items-center justify-center gap-2">
@@ -257,69 +282,64 @@ const ProductDetails = ({
             </div>
           </div>
         </div>
-        <div className=" md:w-[45%] w-[100%] mt-14 p-4">
+        <div className=" sm:w-6/12  w-full  mt-5 p-4">
         
          <div className=" border-b">
-         <p className=" pb-2 text-2xl">{`${allProduct?.title}`}</p>
+         <p className=" pb-2 font-semibold text-2xl">{`${allProduct?.title}`}</p>
          <div className=" pt-3">
          
          </div>
          </div>
          
          <h6 className="pb-2 pt-3">
-            <span className=" text-red-700  font-bold text-2xl">${allProduct?.discountPrice}</span>{" "}
-            <span className=" text-gray-400  line-through text-2xl  pl-3 font-extrabold">
-              ${allProduct?.actualPrice}
-            </span>{" "}
+            <span className=" text-[#E95144]  font-bold text-2xl">Rs.{allProduct?.discountPrice}</span>
+            <span className=" text-[#969696]  line-through text-2xl  pl-3  font-semibold">
+              Rs.{allProduct?.actualPrice}
+            </span>
             
           </h6>
 
           <p>{allProduct?.description}</p>
+          {allProduct?.size?.length > 0 ? (
+  <p className=" pt-3 font-semibold text-lg">
+   Size: {selectedSize && <span className="font-normal">{selectedSize}</span>}
+</p>
+          ):null}
         
-          <p className="pb-2 pt-4 font-semibold text-lg">
-             Selected size:
-          
-          </p>
-          <ul className=" flex gap-2 py-1.5 items-center">
-            <li className=" w-10 h-10 rounded-full border flex justify-center items-center">
-              <p className="">30</p>
-            </li>
-
-            <li className=" w-10 h-10 rounded-full border flex justify-center items-center">
-              <p className="">34</p>
-            </li>
-
-            <li className=" w-10 h-10 rounded-full border flex justify-center items-center">
-              <p className="">44</p>
-            </li>
-
-            <li className=" w-10 h-10 rounded-full border flex justify-center items-center">
-              <p className="">60</p>
-            </li>
-          
-          </ul>
+  <ul className="flex gap-2 py-1.5 items-center">
+    {allProduct?.size?.length > 0 ? (
+      allProduct?.size?.map((item, index) => (
+        <li 
+          key={index} 
+          className={`w-10 h-10 rounded-full border text-sm flex justify-center items-center cursor-pointer
+            ${selectedSize === item ? 'bg-black text-white' : ''}`}
+          onClick={() => setSelectedSize(item)}
+        >
+          <p>{item}</p>
+        </li>
+      ))
+    ) : (
+      <p className="text-gray-500"></p>
+    )}
+  </ul>
+  {allProduct?.size?.length > 0 ? (
+ <p className="  font-semibold text-lg">
+ Size Guide:
+</p>
+  ):null}
+ 
          
 
-          <div className=" flex gap-3 mt-10 items-center">
-          <Button
-           
-            onClick={()=>{
-              dispatch(
-                addToCart({
-                  _id:allProduct?._id,
-                  image:allProduct?.images[0],
-                  description:allProduct?.description,
-                  title:allProduct?.title,
-                  quantity:1,
-                  price:allProduct?.discountPrice
-                })
-              )
+          <div className=" flex gap-3  pt-4 items-center">
 
-              toast.success('Product add to cart successfuly!')
-            }} 
-            label={"Add to cart"}
-            className={"  text-white rounded-md uppercase font-medium bg-black w-full py-3"}
-          />
+            <div  className=" w-40">
+              <input type="number"   onChange={(e)=>e.target.value}  defaultValue={1}  className=" border py-3.5 text-lg px-3 w-full rounded-full"  />
+            </div>
+          <Button
+    onClick={handleAddToCart} 
+    label={"Add to cart"}
+    className={"text-white rounded-full uppercase font-medium bg-[#232323] w-full py-3.5"}
+  />
 
 
           </div>
