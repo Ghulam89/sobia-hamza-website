@@ -103,8 +103,8 @@ const Footer = () => {
           <h5 className="text-[#232323] font-bold">Customer Information</h5>
           <ul className="p-0 leading-7">
             <li>
-              <Link to={"#"} className="text-black text-sm">
-                Size Guide
+              <Link to={"/shop"} className="text-black text-sm">
+                Shop
               </Link>
             </li>
             <li>
