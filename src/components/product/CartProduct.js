@@ -3,6 +3,8 @@ import Button from "../Button";
 import { Link } from "react-router-dom";
 
 const Products = ({ productData }) => {
+  console.log(productData);
+  
   return (
     <Link to={`/product_details/${productData?._id}`} className="w-full bg-white text-black group overflow-hidden">
       <div className="w-full relative h-80">
@@ -12,7 +14,10 @@ const Products = ({ productData }) => {
           alt={productData?.title}
         />
         <div>
-          <p className="m-0 bg-red-400 text-white absolute top-0 px-2 py-0.5">{productData?.gst}%</p>
+          {productData?.gst?
+           <p className="m-0 bg-red-400 text-white absolute top-0 px-2 py-0.5">{productData?.gst}%</p>:null
+          }
+         
         </div>
       </div>
 
